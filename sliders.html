@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"> 
+		<html lang="en">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<title>Find The Ball</title>
+		<style>
+			.img-responsive{
+			max-width:14vh;
+			max-height:14vh;
+			}
+			.img-responsive:hover{
+			  animation-name: pulse;
+			  animation-duration: 2s;
+			  animation-fill-mode: both;
+			  transition: 0.8s ease;
+			}
+			@keyframes pulse {
+			  0% {=
+			  transform: rotate(45deg);
+				}
+			  50% {
+			  transform: rotate(-45deg);
+				}
+			  100%{
+			  transform: rotate(0deg);
+			  }
+			} 
+			.container{
+			margin-top:2vh;
+			}
+			.img-responsive{
+			display:block;
+			margin:auto;
+			}
+			.row-fluid align-items-center{
+			margin-top:0.5vh;
+			}
+			#cups{
+			margin-top:15vh;
+			}
+			#jumb{
+			font-size:6vw;
+			}
+			#expl{
+			font-size:4vw;	
+			}
+			#start{
+			max-width:400px;
+			max-height:200px;
+			font-size:5vw;
+			}
+			#ball{
+			max-width:50px;
+			max-height:50px;
+			left: 50%;
+			top:100%;
+			margin-top: -25px;
+			position: absolute;
+			margin-left: -25px;
+			}
+		</style>
+		<script>
+			var rep = 0;
+			var ballValue = 2;
+			var dateGlobal;
+			var globalCheck=true;
+			var array=["0","aimg","bimg","cimg"]
+			function animate(){
+				console.log(ballValue+"ball");
+				var selected = false; 
+				var C,B;
+				while (selected==false){
+					C = Math.floor(Math.random() * 3)+1; 
+					var tempBool = false;
+					while(tempBool==false){
+						B = Math.floor(Math.random() * 3)+1;
+						if(B!=C){
+							tempBool=true;
+						}
+					}
+					selected=true;
+				}
+				console.log(C+"C");
+				console.log(B+"B");
+				if(C===ballValue){
+				ballValue=B;
+				}
+				else if(B===ballValue){
+				ballValue=C;
+				}
+				var swap = array[B];
+				array[B]=array[C];
+				array[C] = swap;
+				
+				console.log(array);
+				var aString = array[C];
+				var bString = array[B];
+				console.log(aString);
+				console.log(bString);
+				var aOff = $("#"+aString).offset();
+				var bOff = $("#"+bString).offset();
+				
+				var aAnimate = $("#"+aString);
+				var bAnimate = $("#"+bString);
+				
+				var one = parseInt(aOff.left);
+				var two = parseInt(bOff.left);
+				aAnimate.css({position:'fixed'});
+				bAnimate.css({position:'fixed'});
+				aAnimate.animate({left: two + "px" }, "fast");
+				bAnimate.animate({left: one + "px"}, "fast");
+				console.log(ballValue+"ball");
+				rep++;
+			}
+			function bobCup(string){
+			var middlecup = $("#"+string);
+			middlecup.animate({marginTop: '-=15px'},"fast");
+			middlecup.animate({marginTop: '+=15px'},"slow");
+			}
+			function reset(){
+			ballValue=1;
+			var ball = $("#ball");
+			ball.animate({opacity: '0'}, "slow");
+			array=["0","aimg","bimg","cimg"];
+			$("#aimg").css({all:'initial'});
+			$("#bimg").css({all:'initial'});
+			$("#cimg").css({all:'initial'});
+			}
+			function congrats(currentClick){
+			bobCup(array[currentClick]);
+			alert("Bravo!");
+			}
+			$(document).ready(function(){
+				$("#aimg").click(function(event){
+				var currentClick=array.indexOf("aimg");
+				if (ballValue==currentClick){
+				congrats(currentClick);
+				location.reload();
+				}
+			});
+			$("#bimg").click(function(event){
+				console.log(currentClick);
+				var currentClick=array.indexOf("bimg");
+				if(ballValue==currentClick){
+				congrats(currentClick);
+				location.reload();
+				}
+			});
+			$("#cimg").click(function(event){
+				var currentClick=array.indexOf("cimg");
+				console.log(currentClick);
+				if(ballValue==currentClick){
+				congrats(currentClick);
+				location.reload();
+				}
+			});
+				$("#start").click(function(){
+					dateGlobal=new Date();
+					console.log(ballValue);
+					if (globalCheck==true){
+						globalCheck=false;
+						var ball = $("#ball");
+						ball.animate({opacity: '0'}, "slow");
+						//setTimeout(function(){ animate()},1500);
+						var callCount = 1;
+						var repeater = setInterval(function () {
+						  if (callCount < 10) {
+							animate();
+							callCount += 1;
+						  } else {
+							clearInterval(repeater);
+						  }
+						}, 300);
+						globalCheck=true;
+					}
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div class="container">
+		    <div class="jumbotron">
+				<h1 id="jumb">Find the Ball</h1> 
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-8">
+							<p id="expl">Press the start button and try to guess where the ball is.</p> 
+						</div>
+						<div class="col-xs-4">
+							<button id="start" type="button" class="btn btn-warning btn-lg" onClick="">Start</button>
+						</div>
+					</div>
+				</div>
+		    </div>
+		 </div>
+		<div class="container-fluid w-100">
+			<div id="cups" class="row-fluid align-items-center">
+				<div class="col-xs-4">
+					<img id="aimg" class ="img-responsive" src="cup.png">
+				</div>
+				<div class="col-xs-4">
+					<img id="ball" class ="img-responsive" src="ball.png">
+					<img id="bimg" class ="img-responsive" src="cup.png">
+				</div>
+				<div class="col-xs-4">
+					<img id="cimg" class ="img-responsive" src="cup.png">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
