@@ -41,7 +41,7 @@
 			margin-top:0.5vh;
 			}
 			#cups{
-			margin-top:15vh;
+			margin-top:10vh;
 			}
 			#jumb{
 			font-size:6vw;
@@ -181,8 +181,41 @@
 				});
 			});
 		</script>
+		<style>
+			.slider {
+				-webkit-appearance: none;
+				margin-bottom:2vh;
+				height: 15px;
+				border-radius: 5px;   
+				background: #d3d3d3;
+				outline: none;
+				opacity: 0.7;
+				-webkit-transition: .2s;
+				transition: opacity .2s;
+			}
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 25px;
+				height: 25px;
+				border-radius: 50%; 
+				background: #4CAF50;
+				cursor: pointer;
+			}
+			#menuCont > *{
+			display:none;
+			}
+		</style>
 	</head>
 	<body>
+		<div id="menuCont">
+			<div>
+				<input id="sliderOne" type="range" min="1" max="100" value="10" class="slider">
+			</div>
+			<div>
+				<input id="sliderOne" type="range" min="1" max="100" value="10" class="slider">
+			</div>
+		</div>
 		<div class="container">
 		    <div class="jumbotron">
 				<h1 id="jumb">Find the Ball</h1> 
