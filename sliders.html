@@ -44,10 +44,10 @@
 			margin-top:10vh;
 			}
 			#jumb{
-			font-size:6vw;
+			font-size:5vw;
 			}
 			#expl{
-			font-size:4vw;	
+			font-size:3vw;	
 			}
 			#start{
 			max-width:400px;
@@ -65,11 +65,34 @@
 			}
 		</style>
 		<script>
+			var sliderRep = 10;
+			var sliderSpe = 600;
+			var sliderAnim = 200;
 			var rep = 0;
 			var ballValue = 2;
 			var dateGlobal;
 			var globalCheck=true;
 			var array=["0","aimg","bimg","cimg"]
+			
+			function bobCup(string){
+			var middlecup = $("#"+string);
+			middlecup.animate({marginTop: '-=15px'},"fast");
+			middlecup.animate({marginTop: '+=15px'},"slow");
+			}
+			function reset(){
+			ballValue=1;
+			var ball = $("#ball");
+			ball.animate({opacity: '0'}, "slow");
+			array=["0","aimg","bimg","cimg"];
+			$("#aimg").css({all:'initial'});
+			$("#bimg").css({all:'initial'});
+			$("#cimg").css({all:'initial'});
+			}
+			function congrats(currentClick){
+			bobCup(array[currentClick]);
+			alert("Bravo!");
+			}
+			$(document).ready(function(){
 			function animate(){
 				console.log(ballValue+"ball");
 				var selected = false; 
@@ -112,30 +135,11 @@
 				var two = parseInt(bOff.left);
 				aAnimate.css({position:'fixed'});
 				bAnimate.css({position:'fixed'});
-				aAnimate.animate({left: two + "px" }, "fast");
-				bAnimate.animate({left: one + "px"}, "fast");
+				aAnimate.animate({left: two + "px" }, 200);
+				bAnimate.animate({left: one + "px"}, 200);
 				console.log(ballValue+"ball");
 				rep++;
 			}
-			function bobCup(string){
-			var middlecup = $("#"+string);
-			middlecup.animate({marginTop: '-=15px'},"fast");
-			middlecup.animate({marginTop: '+=15px'},"slow");
-			}
-			function reset(){
-			ballValue=1;
-			var ball = $("#ball");
-			ball.animate({opacity: '0'}, "slow");
-			array=["0","aimg","bimg","cimg"];
-			$("#aimg").css({all:'initial'});
-			$("#bimg").css({all:'initial'});
-			$("#cimg").css({all:'initial'});
-			}
-			function congrats(currentClick){
-			bobCup(array[currentClick]);
-			alert("Bravo!");
-			}
-			$(document).ready(function(){
 				$("#aimg").click(function(event){
 				var currentClick=array.indexOf("aimg");
 				if (ballValue==currentClick){
@@ -169,29 +173,63 @@
 						//setTimeout(function(){ animate()},1500);
 						var callCount = 1;
 						var repeater = setInterval(function () {
-						  if (callCount < 10) {
+						  if (callCount < sliderRep) {
 							animate();
 							callCount += 1;
 						  } else {
 							clearInterval(repeater);
 						  }
-						}, 300);
+						}, sliderSpe);
 						globalCheck=true;
 					}
 				});
 			});
 		</script>
 		<style>
+			#side-nav {
+			  background: #7fb0ff;
+			  background-image: -webkit-linear-gradient(top, #5385d6, #0073ba);
+			  background-image: linear-gradient(to bottom, #5385d6, #0073ba);
+			  -webkit-border-radius: 5;
+			  border-radius: 5px;
+			  font-family: Arial;
+			  color: #ffffff;
+			  border: solid #90b2c7 2px;
+			  text-decoration: none;
+			  transition: all 0.5s ease;
+			}
+			#side-nav:hover {
+			  transition: all 0.5s ease;
+			  background: #546ac2;
+			  background-image: -webkit-linear-gradient(top, #546ac2, #3498db);
+			  background-image: linear-gradient(to bottom, #546ac2, #3498db);
+			  text-decoration: none;
+			}
+			#side-nav{
+				margin:2vh 0 0 0vw;
+				width:4vw;
+				font-size:calc(5px + 2vw);
+				min-width:25px;
+				min-height:25px;
+			}
+		</style>
+		<style>
+			#jumb, #expl, #start{
+				transition:0.2s ease;
+			}
+			#sliderOne{
+				margin-top:3vh;
+			}
 			.slider {
 				-webkit-appearance: none;
 				margin-bottom:2vh;
 				height: 15px;
 				border-radius: 5px;   
 				background: #d3d3d3;
-				outline: none;
 				opacity: 0.7;
 				-webkit-transition: .2s;
 				transition: opacity .2s;
+				max-width:600px;
 			}
 			.slider::-webkit-slider-thumb {
 				-webkit-appearance: none;
@@ -202,34 +240,46 @@
 				background: #4CAF50;
 				cursor: pointer;
 			}
-			#menuCont > *{
-			display:none;
+			//.navbar-primary *, .navbar-primary {
+			//	display:none;
+			//}
+			.navbar-primary{
+				//background-color:black;
+				height:10vh;
 			}
 		</style>
+		<script>
+		$( document ).ready(function() {
+			$('#sliderOne').on('input', function(){
+				sliderRep=document.getElementById("sliderOne").value;
+			});
+			$('#sliderTwo').on('input', function(){
+				sliderSpe=document.getElementById("sliderTwo").value;
+			});
+			$('#sliderThree').on('input', function(){
+				sliderAnim=document.getElementById("sliderThree").value;
+			});
+		});
+		</script>
 	</head>
 	<body>
-		<div id="menuCont">
-			<div>
-				<input id="sliderOne" type="range" min="1" max="100" value="10" class="slider">
-			</div>
-			<div>
-				<input id="sliderOne" type="range" min="1" max="100" value="10" class="slider">
-			</div>
-		</div>
 		<div class="container">
-		    <div class="jumbotron">
-				<h1 id="jumb">Find the Ball</h1> 
-				<div class="container">
-					<div class="row">
-						<div class="col-xs-8">
-							<p id="expl">Press the start button and try to guess where the ball is.</p> 
-						</div>
-						<div class="col-xs-4">
+			<div class="row">
+				<input id="sliderOne" class="slider" type="range" min="1" max="50" value="10" data-toggle="tooltip" data-placement="right" title="Number of shuffles"></input>
+				<div class="jumbotron">
+					<h1 id="jumb">Find the Ball</h1> 
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-8">
+								<p id="expl">Press the start button and try to guess where the ball is. Set up the sliders before pressing "start".</p> 
+							</div>
 							<button id="start" type="button" class="btn btn-warning btn-lg" onClick="">Start</button>
 						</div>
 					</div>
-				</div>
-		    </div>
+				</div>		
+					<input id="sliderTwo" class="slider" type="range" min="250" max="2000" value="600" data-toggle="tooltip" data-placement="right" title="Shuffle speed"></input>
+					<input id="sliderThree" class="slider" type="range" min="30" max="1000" value="200" data-toggle="tooltip" data-placement="right" title="Animation speed"></input>
+			</div>
 		 </div>
 		<div class="container-fluid w-100">
 			<div id="cups" class="row-fluid align-items-center">
