@@ -135,8 +135,8 @@
 				var two = parseInt(bOff.left);
 				aAnimate.css({position:'fixed'});
 				bAnimate.css({position:'fixed'});
-				aAnimate.animate({left: two + "px" }, 200);
-				bAnimate.animate({left: one + "px"}, 200);
+				aAnimate.animate({left: two + "px" }, parseInt(sliderAnim));
+				bAnimate.animate({left: one + "px"}, parseInt(sliderAnim));
 				console.log(ballValue+"ball");
 				rep++;
 			}
@@ -230,6 +230,16 @@
 				-webkit-transition: .2s;
 				transition: opacity .2s;
 				max-width:600px;
+			}
+			
+			#sliderOne{
+			background:red;
+			}
+			#sliderOne::-webkit-slider-thumb {
+			background-color:black;
+			}
+			#sliderTwo::-webkit-slider-thumb {
+			background: purple;
 			}
 			.slider::-webkit-slider-thumb {
 				-webkit-appearance: none;
