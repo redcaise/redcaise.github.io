@@ -10,8 +10,8 @@
 		<title>Find The Ball</title>
 		<style>
 			.img-responsive{
-			max-width:14vh;
-			max-height:14vh;
+			max-width:16vw;
+			max-height:16vw;
 			}
 			.img-responsive:hover{
 			  animation-name: pulse;
@@ -41,13 +41,13 @@
 			margin-top:0.5vh;
 			}
 			#cups{
-			margin-top:10vh;
+			margin-top:20vh;
 			}
 			#jumb{
-			font-size:5vw;
+			font-size:4vw;
 			}
 			#expl{
-			font-size:2.5vh;	
+			font-size:2vw;	
 			}
 			#start{
 			max-width:400px;
@@ -65,34 +65,11 @@
 			}
 		</style>
 		<script>
-			var sliderRep = 10;
-			var sliderSpe = 600;
-			var sliderAnim = 200;
 			var rep = 0;
 			var ballValue = 2;
 			var dateGlobal;
 			var globalCheck=true;
 			var array=["0","aimg","bimg","cimg"]
-			
-			function bobCup(string){
-			var middlecup = $("#"+string);
-			middlecup.animate({marginTop: '-=15px'},"fast");
-			middlecup.animate({marginTop: '+=15px'},"slow");
-			}
-			/*function reset(){
-			ballValue=1;
-			var ball = $("#ball");
-			ball.animate({opacity: '0'}, "slow");
-			array=["0","aimg","bimg","cimg"];
-			$("#aimg").css({all:'initial'});
-			$("#bimg").css({all:'initial'});
-			$("#cimg").css({all:'initial'});
-			}*/
-			function congrats(currentClick){
-			bobCup(array[currentClick]);
-			alert("Bravo!");
-			}
-			$(document).ready(function(){
 			function animate(){
 				console.log(ballValue+"ball");
 				var selected = false; 
@@ -108,8 +85,8 @@
 					}
 					selected=true;
 				}
-				//console.log(C+"C");
-				//console.log(B+"B");
+				console.log(C+"C");
+				console.log(B+"B");
 				if(C===ballValue){
 				ballValue=B;
 				}
@@ -120,11 +97,11 @@
 				array[B]=array[C];
 				array[C] = swap;
 				
-				//console.log(array);
+				console.log(array);
 				var aString = array[C];
 				var bString = array[B];
-				//console.log(aString);
-				//console.log(bString);
+				console.log(aString);
+				console.log(bString);
 				var aOff = $("#"+aString).offset();
 				var bOff = $("#"+bString).offset();
 				
@@ -135,11 +112,30 @@
 				var two = parseInt(bOff.left);
 				aAnimate.css({position:'fixed'});
 				bAnimate.css({position:'fixed'});
-				aAnimate.animate({left: two + "px" }, parseInt(sliderAnim));
-				bAnimate.animate({left: one + "px"}, parseInt(sliderAnim));
-				//console.log(ballValue+"ball");
+				aAnimate.animate({left: two + "px" }, "slow");
+				bAnimate.animate({left: one + "px"}, "slow");
+				console.log(ballValue+"ball");
 				rep++;
 			}
+			function bobCup(string){
+			var middlecup = $("#"+string);
+			middlecup.animate({marginTop: '-=15px'},"fast");
+			middlecup.animate({marginTop: '+=15px'},"slow");
+			}
+			function reset(){
+			ballValue=1;
+			var ball = $("#ball");
+			ball.animate({opacity: '0'}, "slow");
+			array=["0","aimg","bimg","cimg"];
+			$("#aimg").css({all:'initial'});
+			$("#bimg").css({all:'initial'});
+			$("#cimg").css({all:'initial'});
+			}
+			function congrats(currentClick){
+			bobCup(array[currentClick]);
+			alert("Bravo!");
+			}
+			$(document).ready(function(){
 				$("#aimg").click(function(event){
 				var currentClick=array.indexOf("aimg");
 				if (ballValue==currentClick){
@@ -148,7 +144,7 @@
 				}
 			});
 			$("#bimg").click(function(event){
-				//console.log(currentClick);
+				console.log(currentClick);
 				var currentClick=array.indexOf("bimg");
 				if(ballValue==currentClick){
 				congrats(currentClick);
@@ -157,15 +153,15 @@
 			});
 			$("#cimg").click(function(event){
 				var currentClick=array.indexOf("cimg");
-				//console.log(currentClick);
+				console.log(currentClick);
 				if(ballValue==currentClick){
 				congrats(currentClick);
 				location.reload();
 				}
 			});
 				$("#start").click(function(){
-					//dateGlobal=new Date();
-					//console.log(ballValue);
+					dateGlobal=new Date();
+					console.log(ballValue);
 					if (globalCheck==true){
 						globalCheck=false;
 						var ball = $("#ball");
@@ -173,108 +169,35 @@
 						//setTimeout(function(){ animate()},1500);
 						var callCount = 1;
 						var repeater = setInterval(function () {
-						  if (callCount < sliderRep) {
+						  if (callCount < 10) {
 							animate();
 							callCount += 1;
 						  } else {
 							clearInterval(repeater);
 						  }
-						}, sliderSpe);
+						}, 600);
 						globalCheck=true;
 					}
 				});
 			});
 		</script>
-		<style>
-			#jumb, #expl, #start{
-				transition:0.2s ease;
-			}
-			#sliderOne{
-				margin-top:3vh;
-			}
-			.slider {
-				-webkit-appearance: none;
-				margin-bottom:2vh;
-				height: 15px;
-				border-radius: 5px;   
-				background: #d3d3d3;
-				opacity: 0.7;
-				-webkit-transition: .2s;
-				transition: opacity .2s;
-			}
-			input[type=range]{
-			//width:initial;
-			width:50vw;
-			display:inline;
-			}
-			#sliderOne{
-			background:red;
-			}
-			#sliderOne::-webkit-slider-thumb {
-			background-color:black;
-			}
-			#sliderTwo::-webkit-slider-thumb {
-			background: purple;
-			}
-			.slider::-webkit-slider-thumb {
-				-webkit-appearance: none;
-				appearance: none;
-				width: 25px;
-				height: 25px;
-				border-radius: 50%; 
-				background: #4CAF50;
-				cursor: pointer;
-			}
-			span{
-			padding-left:10px;
-			font-size:4vw;
-			}
-			.jumbotron{
-			margin-bottom:0;
-			}
-		</style>
-		<script>
-		$( document ).ready(function() {
-			$('#sliderOne').on('input', function(){
-				sliderRep=document.getElementById("sliderOne").value;
-			});
-			$('#sliderTwo').on('input', function(){
-				sliderSpe=document.getElementById("sliderTwo").value;
-			});
-			$('#sliderThree').on('input', function(){
-				sliderAnim=document.getElementById("sliderThree").value;
-			});
-		});
-		</script>
 	</head>
 	<body>
 		<div class="container">
-			<div class="row-fluid">
-				<div class="jumbotron">
-					<h1 id="jumb">Find the Ball</h1> 
-					<div class="container">
-						<div class="row">
-							<div class="col-xs-8">
-								<p id="expl">Press the start button and try to guess where the ball is. Set up the sliders before pressing "start."</p> 
-							</div>
+		    <div class="jumbotron">
+				<h1 id="jumb">Find the Ball</h1> 
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-8">
+							<p id="expl">Press the start button and try to guess where the ball is.</p> 
+						</div>
+						<div class="col-xs-4">
 							<button id="start" type="button" class="btn btn-warning btn-lg" onClick="">Start</button>
 						</div>
 					</div>
 				</div>
-				<div class="row-fluid">
-					<input id="sliderOne" class="slider" type="range" min="1" max="50" value="10" data-toggle="tooltip" data-placement="right" title="Number of shuffles"></input>
-					<span>Shuffle Number</span>
-				</div>
-				<div class="row-fluid">
-					<input id="sliderTwo" class="slider" type="range" min="250" max="2000" value="600" data-toggle="tooltip" data-placement="right" title="Shuffle speed"></input>
-					<span>Shuffle Time</span>
-				</div>
-				<div class="row-fluid">
-					<input id="sliderThree" class="slider" type="range" min="30" max="1000" value="200" data-toggle="tooltip" data-placement="right" title="Animation speed"></input>
-					<span>Shuffle Speed</span>
-				</div>
-			</div>
-		</div>
+		    </div>
+		 </div>
 		<div class="container-fluid w-100">
 			<div id="cups" class="row-fluid align-items-center">
 				<div class="col-xs-4">
