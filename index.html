@@ -8,6 +8,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 		<title>Find The Ball</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
 		<style>
 			.img-responsive{
 			max-width:14vh;
@@ -65,9 +67,34 @@
 			}
 		</style>
 		<script>
-			var sliderRep = 10;
-			var sliderSpe = 600;
-			var sliderAnim = 200;
+			function getCookie(cname) {
+				var name = cname + "=";
+				var decodedCookie = decodeURIComponent(document.cookie);
+				var ca = decodedCookie.split(';');
+				for(var i = 0; i <ca.length; i++) {
+					var c = ca[i];
+					while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+						return c.substring(name.length, c.length);
+					}
+				}
+				return "";
+			}	
+			var sliderRep;
+			var sliderSpe;
+			var sliderAnim;
+			if(getCookie("rep") == ""){
+				sliderRep = 10;
+				sliderSpe = 600;
+				sliderAnim = 200;
+			}
+			else{
+				sliderRep = getCookie("rep");
+				sliderSpe = getCookie("spe");
+				sliderAnim = getCookie("ani");
+			}
 			var rep = 0;
 			var ballValue = 2;
 			var dateGlobal;
@@ -75,26 +102,19 @@
 			var array=["0","aimg","bimg","cimg"]
 			
 			function bobCup(string){
-			var middlecup = $("#"+string);
-			middlecup.animate({marginTop: '-=15px'},"fast");
-			middlecup.animate({marginTop: '+=15px'},"slow");
+				var middlecup = $("#"+string);
+				middlecup.animate({marginTop: '-=15px'},"fast");
+				middlecup.animate({marginTop: '+=15px'},"slow");
 			}
-			/*function reset(){
-			ballValue=1;
-			var ball = $("#ball");
-			ball.animate({opacity: '0'}, "slow");
-			array=["0","aimg","bimg","cimg"];
-			$("#aimg").css({all:'initial'});
-			$("#bimg").css({all:'initial'});
-			$("#cimg").css({all:'initial'});
-			}*/
 			function congrats(currentClick){
-			bobCup(array[currentClick]);
-			alert("Bravo!");
+				bobCup(array[currentClick]);
+				alert("Bravo!");
 			}
 			$(document).ready(function(){
+				document.getElementById("sliderOne").value = sliderRep;
+				document.getElementById("sliderTwo").value = sliderSpe;
+				document.getElementById("sliderThree").value = sliderAnim;
 			function animate(){
-				console.log(ballValue+"ball");
 				var selected = false; 
 				var C,B;
 				while (selected==false){
@@ -108,8 +128,6 @@
 					}
 					selected=true;
 				}
-				//console.log(C+"C");
-				//console.log(B+"B");
 				if(C===ballValue){
 				ballValue=B;
 				}
@@ -119,25 +137,18 @@
 				var swap = array[B];
 				array[B]=array[C];
 				array[C] = swap;
-				
-				//console.log(array);
 				var aString = array[C];
 				var bString = array[B];
-				//console.log(aString);
-				//console.log(bString);
 				var aOff = $("#"+aString).offset();
 				var bOff = $("#"+bString).offset();
-				
 				var aAnimate = $("#"+aString);
 				var bAnimate = $("#"+bString);
-				
 				var one = parseInt(aOff.left);
 				var two = parseInt(bOff.left);
 				aAnimate.css({position:'fixed'});
 				bAnimate.css({position:'fixed'});
 				aAnimate.animate({left: two + "px" }, parseInt(sliderAnim));
 				bAnimate.animate({left: one + "px"}, parseInt(sliderAnim));
-				//console.log(ballValue+"ball");
 				rep++;
 			}
 				$("#aimg").click(function(event){
@@ -148,7 +159,6 @@
 				}
 			});
 			$("#bimg").click(function(event){
-				//console.log(currentClick);
 				var currentClick=array.indexOf("bimg");
 				if(ballValue==currentClick){
 				congrats(currentClick);
@@ -157,20 +167,19 @@
 			});
 			$("#cimg").click(function(event){
 				var currentClick=array.indexOf("cimg");
-				//console.log(currentClick);
 				if(ballValue==currentClick){
 				congrats(currentClick);
 				location.reload();
 				}
 			});
 				$("#start").click(function(){
-					//dateGlobal=new Date();
-					//console.log(ballValue);
 					if (globalCheck==true){
 						globalCheck=false;
+						document.cookie = "rep="+sliderRep;
+						document.cookie = " spe=" + sliderSpe;
+						document.cookie = " ani=" + sliderAnim;
 						var ball = $("#ball");
 						ball.animate({opacity: '0'}, "slow");
-						//setTimeout(function(){ animate()},1500);
 						var callCount = 1;
 						var repeater = setInterval(function () {
 						  if (callCount < sliderRep) {
