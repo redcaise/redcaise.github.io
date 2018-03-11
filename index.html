@@ -206,15 +206,21 @@
 			//width:initial;
 			width:50vw;
 			display:inline;
+			background:#938172;
+			}
+			@keyframes gradientTwo { 
+				0%{background-position:41% 0%}
+				50%{background-position:60% 100%}
+				100%{background-position:41% 0%}
 			}
 			#sliderOne{
-			background:red;
+			//background:#9b111e;
 			}
 			#sliderOne::-webkit-slider-thumb {
-			background-color:black;
+			background-color:#4169e1;
 			}
 			#sliderTwo::-webkit-slider-thumb {
-			background: purple;
+			background: #9b111e;
 			}
 			.slider::-webkit-slider-thumb {
 				-webkit-appearance: none;
@@ -222,15 +228,36 @@
 				width: 25px;
 				height: 25px;
 				border-radius: 50%; 
-				background: #4CAF50;
+				background: #FFF933;
 				cursor: pointer;
+				border-style:solid;
+				border-width:2px;
+				border-color:black;
 			}
 			span{
-			padding-left:10px;
-			font-size:11px + 2vw;
+				padding-left:10px;
+				font-size:11px + 2vw;
 			}
 			.jumbotron{
-			margin-bottom:0;
+				margin-bottom:0;
+				//background-image: linear-gradient(to right bottom, #82b3e3, #6b9fc9, #558caf, #427996, #2f667e);
+				background: linear-gradient(166deg, #84e3ca, #0d9f19, #78b3f7, #722c87, #e45040, #c1b400);
+				background-size: 1200% 1200%;
+				-webkit-animation: gradientTwo 30s ease infinite;
+			}
+			html{
+				height:100%;
+			}
+			body{
+				background-repeat: no-repeat;
+				background: linear-gradient(270deg, #1a6753, #77b7a7, #115db6, #e4bd40, #e45040);
+				background-size: 1000% 1000%;
+				-webkit-animation: gradientOne 10s ease infinite;
+			}
+			@keyframes gradientOne { 
+				0%{background-position:0% 50%}
+				50%{background-position:100% 50%}
+				100%{background-position:0% 50%}
 			}
 		</style>
 		<script>
@@ -250,7 +277,7 @@
 	<body>
 		<div class="container">
 			<div class="row-fluid">
-				<div class="jumbotron">
+				<div id "jumbcont" class="jumbotron">
 					<h1 id="jumb">Find the Ball</h1> 
 					<div class="container">
 						<div class="row">
