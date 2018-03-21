@@ -10,6 +10,7 @@
 		var lengen;
 		var c;
 		var ctx;
+		var x_offset=15;
 		var it_angle=36;
 		function draw(startX, startY, len, angle, lengen) {
 		  var test = parseInt(lengen);
@@ -21,19 +22,21 @@
 		  ctx.moveTo(0, 0);
 		  ctx.lineTo(0, -len);
 		  ctx.stroke();
-		  
+		  console.log(x_offset);
 		  if(len < lengen) {
 			ctx.restore();
 			return;
 		  }
 		  
-		  draw(15, len, len*0.8, -it_angle,lengen);
-		  draw(15, -len, len*0.8, it_angle,lengen);
+		  draw(x_offset, len, len*0.8, -it_angle,lengen);
+		  draw(x_offset, -len, len*0.8, it_angle,lengen);
 		  
 		  ctx.restore();
 		}
 		function callSlider(){
 			c = document.getElementById("can");
+			x_offset = document.getElementById("obox").value;
+			x_offset = parseInt(x_offset);
 			ctx = c.getContext("2d");
 			ctx.clearRect(0, 0, c.width, c.height);
 			var gen = document.getElementById("slider").value;
@@ -52,7 +55,7 @@
 					test+=1;
 				//}
 			}
-			console.log(test);
+			//console.log(test);
 			//ctx.restore();
 			test = 0;
 			count = 0;
@@ -64,13 +67,7 @@
 					test+=1;
 				//}
 			}
-			console.log(test);
-		}
-		window.onload = function(){
-		canvas.addEventListener("mousedown", function(evt){
-                    mouseDown = true;
-                    
-                });
+			//console.log(test);
 		}
 	</script>
 </head>
@@ -83,15 +80,20 @@
 		</div>
 		<div class="row-fluid">	
 			<div class="col-xs-12">
-				<input type="range" min="1" max="20" value="1" class="slider" id="slider" onchange="callSlider()">
+				<input type="range" min="1" max="17" value="1" class="slider" id="slider" onchange="callSlider()">
 			</div>
 		</div>
 		<div class="row-fluid">	
 			<div class="col-xs-6">
-				<input type="text" id="lbox" value="120">
+				<input type="text" id="lbox" value="120" onchange="callSlider()">
 			</div>
 			<div class="col-xs-6">
-				<input type="text" id="abox" value="36">
+				<input type="text" id="abox" value="36" onchange="callSlider()">
+			</div>
+		</div>
+		<div class="row-fluid">	
+			<div class="col-xs-6">
+				<input type="text" id="obox" value="15" onchange="callSlider()">
 			</div>
 		</div>
 	</div>
